@@ -1,6 +1,8 @@
 ## Simple ASPNET Core logger
 
-`ILogger`, `IloggerProvider`, `ILoggerFactory` implementation with `HttpContextLogger` middleware + Console/JSON logger.
+`ILogger`, `IloggerProvider`, `ILoggerFactory` implementation with `HttpContextLogger` middleware + Console/JSON logger. Basically the core functionality of popular loging libraries like "Serilog" or "NLog".
+
+------------
 
 1) To use this customizable logger, implement `ISimpleSink`:
 
