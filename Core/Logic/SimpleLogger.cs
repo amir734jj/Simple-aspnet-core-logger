@@ -5,15 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Core
 {
-    class ConsoleSink : ISimpleSink
-    {
-        public void Emit<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception,
-            string message)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
     public class SimpleLogger : ILogger, IDisposable
     {
         private readonly string _categoryName;
