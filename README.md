@@ -3,7 +3,7 @@
 1) To use this customizable logger, implement `ISimpleSink`:
 
 ```csharp
-class SimpleConsoleSink : ISimpleSink
+public class SimpleConsoleSink : ISimpleSink
 {
     public void Emit<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception, string message)
     {
@@ -14,9 +14,8 @@ class SimpleConsoleSink : ISimpleSink
 
 2) Then add it to `IWebHostBuilder`:
 ```csharp
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseSimpleLog<SimpleConsoleSink>(); // <-- Add this line;
-}
+public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>()
+            .UseSimpleLog<SimpleConsoleSink>(); // <-- Add this line;
 ```
