@@ -1,7 +1,8 @@
 ## Simple ASPNET Core logger
 
 1) To use this customizable logger, implement `ISimpleSink`:
-```
+
+```csharp
 class SimpleConsoleSink : ISimpleSink
 {
     public void Emit<TState>(string categoryName, LogLevel logLevel, EventId eventId, TState state, Exception exception, string message)
