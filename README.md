@@ -19,3 +19,18 @@ public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             .UseStartup<Startup>()
             .UseSimpleLog<SimpleConsoleSink>(); // <-- Add this line;
 ```
+
+3) HttpContext logger:
+
+```csharp
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    ...
+    
+    // Middleware to log HttpContext
+    app.UseSimpleContextLoggerMiddleware();
+    
+    app.UseMvc();
+    ...
+}
+```
