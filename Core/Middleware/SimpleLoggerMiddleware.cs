@@ -1,9 +1,9 @@
-using System.Globalization;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Extensions;
+using Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -13,62 +13,76 @@ namespace Core.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+        private readonly Func<HttpContextLogModel, object> _formatter;
 
         // ReSharper disable once SuggestBaseTypeForParameter
-        public SimpleLoggerMiddleware(RequestDelegate next, ILogger<SimpleLoggerMiddleware> logger)
+        public SimpleLoggerMiddleware(RequestDelegate next, ILogger<SimpleLoggerMiddleware> logger,
+            Func<HttpContextLogModel, object> formatter)
         {
             _next = next;
             _logger = logger;
+            // ReSharper disable once RedundantDelegateCreation
+            _formatter = formatter ?? new Func<HttpContextLogModel, object>(x => x);
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task Invoke(HttpContext context)
         {
-            var payload = new
+            string responseBody;
+            var originalBodyStream = context.Response.Body;
+            using (var memoryStream = new MemoryStream())
             {
-                Header = context.Request.Headers.ToDictionary(x => x.Key, x => x.Value.Select(y => y)),
-                Request = await GetRequestBody(context.Request),
-                Response = await GetResponseBody(context.Response)
+                context.Response.Body = memoryStream;
+                await _next(context);
+
+                responseBody = await GetResponseBody(context.Response.Body);
+
+                await memoryStream.CopyToAsync(originalBodyStream);
+            }
+
+            var requestBody = await GetRequestBody(context.Request);
+
+            var logContext = new HttpContextLogModel
+            {
+                Method = context.Request.Method,
+                Host = context.Request.Host.ToString(),
+                Headers = context.Request.Headers.ToDictionary(x => x.Key, y => y.Value.ToString()),
+                IpAddress = context.Connection.RemoteIpAddress.ToString(),
+                Path = context.Request.Path.ToString(),
+                QueryString = context.Request.QueryString.ToString(),
+                RequestBody = requestBody,
+                ResponseBody = responseBody
             };
 
-            _logger.Log(LogLevel.Information, "ContextLoggerMiddleware", payload);
-
-            // Call the next delegate/middleware in the pipeline
-            await _next(context);
+            var payload = _formatter(logContext);
+            
+            _logger.Log(
+                LogLevel.Information,
+                new EventId(),
+                payload,
+                null, (log, exception) => log.ToString()
+            );
         }
 
-        /// <summary>
-        ///     Gets the body of HttpRequest as a string
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
         private static async Task<string> GetRequestBody(HttpRequest request)
         {
-            if (request.ContentLength.HasValue)
+            if (request.ContentLength.HasValue && request.ContentLength > 0)
             {
-                var contentLength = request.ContentLength;
-                const long num = 0;
-                if ((contentLength.GetValueOrDefault() > num ? 1 : 0) != 0)
+                using (var reader = new StreamReader(request.Body, Encoding.UTF8))
                 {
-                    using (var streamReader = new StreamReader(request.Body, Encoding.UTF8))
-                        return await streamReader.ReadToEndAsync();
+                    return await reader.ReadToEndAsync();
                 }
             }
 
             return string.Empty;
         }
 
-        /// <summary>
-        ///     Converts stream to a string
-        /// </summary>
-        /// <param name="body"></param>
-        /// <returns></returns>
-        private static async Task<string> GetResponseBody(HttpResponse response)
+        private static async Task<string> GetResponseBody(Stream body)
         {
-            var body = response.Body;
-            //body.Position = 0;
-            //var endAsync = await new StreamReader(body).ReadToEndAsync();
-            //body.Position = 0;
-            return "response";
+            body.Seek(0, SeekOrigin.Begin);
+            var bodyString = await new StreamReader(body).ReadToEndAsync();
+            body.Seek(0, SeekOrigin.Begin);
+
+            return bodyString;
         }
     }
 }

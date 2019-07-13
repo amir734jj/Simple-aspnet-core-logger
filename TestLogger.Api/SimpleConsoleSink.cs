@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Core.Interfaces;
+using Core.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -11,17 +13,28 @@ namespace TestLogger.Api
             string message)
         {
             // Log only information
-            if (logLevel == LogLevel.Information)
+            if (logLevel == LogLevel.Information && categoryName == "Core.Middleware.SimpleLoggerMiddleware")
             {
-                var payload = new
+                var payload = new Dictionary<string, object>
                 {
-                    CategoryName = categoryName,
-                    LogLevel = logLevel,
-                    EventId = eventId,
-                    State = state,
-                    Exception = exception
+                    ["CategoryName"] = categoryName,
+                    ["LogLevel"] = logLevel.ToString(),
+                    ["EventId"] = eventId,
+                    ["Message"] = message
                 };
 
+                switch (state)
+                {
+                    case HttpContextLogModel structuredLog:
+                        payload["State"] = structuredLog;
+                        break;
+                }
+                
+                if (exception != null)
+                {
+                    payload["Exception"] = exception;
+                }
+                
                 var json = JsonConvert.SerializeObject(payload);
 
                 Console.WriteLine(json);
