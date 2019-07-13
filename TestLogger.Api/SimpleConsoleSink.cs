@@ -18,7 +18,7 @@ namespace TestLogger.Api
                 var payload = new Dictionary<string, object>
                 {
                     ["CategoryName"] = categoryName,
-                    ["LogLevel"] = logLevel.ToString(),
+                    ["LogLevel"] = logLevel.ToString(), // Force Enum ToString
                     ["EventId"] = eventId,
                     ["Message"] = message
                 };
