@@ -13,7 +13,7 @@ namespace TestLogger.Api
             string message)
         {
             // Log only information
-            if (logLevel == LogLevel.Information && categoryName == "Core.Middleware.SimpleLoggerMiddleware")
+            if (logLevel == LogLevel.Information)
             {
                 var payload = new Dictionary<string, object>
                 {
