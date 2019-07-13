@@ -17,9 +17,17 @@ namespace Core.Extensions
         {
             return builder.ConfigureServices((x, y) =>
             {
-                y.AddSingleton<ISimpleSink>(ctx => ctx.GetRequiredService<TSimpleSink>());
-                y.AddSingleton<ILoggerProvider>(ctx => ctx.GetRequiredService<SimpleLoggerProvider>());
-                y.AddSingleton<ILoggerFactory>(ctx => ctx.GetRequiredService<SimpleLoggerFactory>());
+                y.AddSingleton<ISimpleSink, TSimpleSink>();
+                y.AddSingleton<ILoggerProvider, SimpleLoggerProvider>();
+                y.AddSingleton<ILoggerFactory, SimpleLoggerFactory>(ctx =>
+                {
+                    var provider = ctx.GetService<ILoggerProvider>();
+                    var instance = new SimpleLoggerFactory();
+                    
+                    // Add provider immediately after instantiation
+                    instance.AddProvider(provider);
+                    return instance;
+                });
             });
         }
     }

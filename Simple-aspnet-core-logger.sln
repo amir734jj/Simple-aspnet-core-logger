@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{70FD5274-23E6-4DC5-ACAD-7AE482469A8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLogger.Api", "TestLogger.Api\TestLogger.Api.csproj", "{79CD67C4-D1F9-4BB4-8094-516356DC477D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{70FD5274-23E6-4DC5-ACAD-7AE482469A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70FD5274-23E6-4DC5-ACAD-7AE482469A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70FD5274-23E6-4DC5-ACAD-7AE482469A8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79CD67C4-D1F9-4BB4-8094-516356DC477D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79CD67C4-D1F9-4BB4-8094-516356DC477D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79CD67C4-D1F9-4BB4-8094-516356DC477D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79CD67C4-D1F9-4BB4-8094-516356DC477D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
