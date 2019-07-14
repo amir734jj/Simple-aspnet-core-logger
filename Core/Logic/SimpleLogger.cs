@@ -1,9 +1,9 @@
 ﻿using System;
-using Core.Interfaces;
-using Core.Utilities;
 using Microsoft.Extensions.Logging;
+using SimpleLogger.Interfaces;
+using SimpleLogger.Utilities;
 
-namespace Core
+namespace SimpleLogger.Logic
 {
     public class SimpleLogger : ILogger, IDisposable
     {

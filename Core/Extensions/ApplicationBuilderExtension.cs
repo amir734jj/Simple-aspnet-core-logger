@@ -1,9 +1,9 @@
 using System;
-using Core.Middleware;
-using Core.Models;
 using Microsoft.AspNetCore.Builder;
+using SimpleLogger.Middleware;
+using SimpleLogger.Models;
 
-namespace Core.Extensions
+namespace SimpleLogger.Extensions
 {
     public static class ApplicationBuilderExtension
     {

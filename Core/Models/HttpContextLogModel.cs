@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Core.Models
+namespace SimpleLogger.Models
 {
     public class HttpContextLogModel
     {

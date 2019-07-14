@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
-using Core.Extensions;
-using Core.Interfaces;
 using Microsoft.Extensions.Logging;
+using SimpleLogger.Extensions;
+using SimpleLogger.Interfaces;
 
-namespace Core
+namespace SimpleLogger.Logic
 {
     public class SimpleLoggerProvider : ILoggerProvider
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Core.Interfaces;
-using Core.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using SimpleLogger.Interfaces;
+using SimpleLogger.Models;
 
 namespace TestLogger.Api
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Core.Extensions
+namespace SimpleLogger.Extensions
 {
     internal static class LinqExtension
     {

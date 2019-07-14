@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Core.Interfaces
+namespace SimpleLogger.Interfaces
 {
     public interface ISimpleSink
     {

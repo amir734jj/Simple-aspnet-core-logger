@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Utilities
+namespace SimpleLogger.Utilities
 {
     /// <summary>
     /// Provides a set of static methods for creating <see cref="IDisposable"/> objects.

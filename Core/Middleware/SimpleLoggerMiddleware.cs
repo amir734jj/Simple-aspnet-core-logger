@@ -3,11 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using SimpleLogger.Models;
 
-namespace Core.Middleware
+namespace SimpleLogger.Middleware
 {
     public class SimpleLoggerMiddleware
     {

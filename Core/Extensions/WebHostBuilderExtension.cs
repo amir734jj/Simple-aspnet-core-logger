@@ -1,9 +1,10 @@
-using Core.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SimpleLogger.Interfaces;
+using SimpleLogger.Logic;
 
-namespace Core.Extensions
+namespace SimpleLogger.Extensions
 {
     public static class WebHostBuilderExtension
     {

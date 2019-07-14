@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Core
+namespace SimpleLogger.Logic
 {
     public class SimpleLoggerFactory : ILoggerFactory
     {

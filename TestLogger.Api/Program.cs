@@ -1,6 +1,6 @@
-﻿using Core.Extensions;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using SimpleLogger.Extensions;
 
 namespace TestLogger.Api
 {
